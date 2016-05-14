@@ -1,0 +1,51 @@
+[user]
+    name = Klaus Silveira
+    email = contact@klaussilveira.com
+
+[push]
+    default = current
+
+[color]
+    ui = auto
+
+[color "diff"]
+    meta = blue bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow bold
+    remote = green bold
+    plain = red bold
+
+[color "status"]
+    added = yellow
+    changed = green bold
+    untracked = blue bold
+
+[alias]
+    branches = branch -a
+    tags = tag
+    stashes = stash list
+    remotes = remote -v
+    unstage = reset HEAD --
+    discard = checkout --
+    letitgo = !git reset --hard HEAD && git clean -d -f
+    ignore = update-index --assume-unchanged
+    unignore = update-index --no-assume-unchanged
+    ignored = "!git ls-files -v | grep ^h | cut -c 3-"
+    wtf = diff --cached HEAD^
+    co = checkout
+    up = !git pull --rebase --prune $@
+    undo = reset --hard HEAD^
+    amend = commit -S --amend
+    commit = commit -S
+    fix = commit --amend --reuse-message=HEAD
+    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat
+    standup = log --since "yesterday" --all --abbrev-commit --no-merges --oneline --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    histogram = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+[include]
+        path = ~/.gitconfig.local
