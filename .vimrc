@@ -1,5 +1,5 @@
 set t_Co=256
-colorscheme molokai
+colorscheme base16-ocean
 set nocompatible
 set number
 set backspace=indent,eol,start
