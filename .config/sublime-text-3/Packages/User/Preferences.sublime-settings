@@ -1,6 +1,7 @@
 {
-    "color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
-	"detect_indentation": false,
+	"color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
+	"detect_indentation": true,
+	"dpi_scale": 1.2,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Inconsolata",
 	"font_size": 15,
@@ -8,10 +9,10 @@
 	[
 		"Vintage"
 	],
+	"spacegray_sidebar_font_large": true,
+	"spacegray_sidebar_tree_large": true,
 	"tab_size": 4,
 	"theme": "Spacegray.sublime-theme",
-    "spacegray_sidebar_font_xlarge": true,
-    "spacegray_sidebar_tree_xlarge": true,
 	"translate_tabs_to_spaces": true,
 	"trim_automatic_white_space": true,
 	"trim_trailing_white_space_on_save": true,

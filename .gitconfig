@@ -43,6 +43,7 @@
     amend = commit -S --amend
     commit = commit -S
     fix = commit --amend --reuse-message=HEAD
+    cleanup = !git branch | grep -v "master" | xargs git branch -D
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --stat
     standup = log --since "yesterday" --all --abbrev-commit --no-merges --oneline --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     histogram = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
