@@ -15,7 +15,7 @@ set hlsearch
 set viminfo='100,f1
 set noswapfile
 set nobackup
-set nowb
+set mouse=a
 
 if has('persistent_undo')
     set undofile
@@ -52,3 +52,26 @@ set wildignore+=*.png,*.jpg,*.gif
 set scrolloff=8
 set sidescrolloff=15
 set sidescroll=1
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugins')
+    Plug 'junegunn/fzf', { 'dir': '/var/opt/fzf' }
+call plug#end()
+
+" Custom FZF finder
+function! s:get_git_root()
+  let root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+  return v:shell_error ? '' : root
+endfunction
+
+command! -bang ProjectFiles
+  \ call fzf#run(fzf#wrap('project-files', {'source': 'git ls-files', 'dir': s:get_git_root()}, <bang>0))
+
+command! -bang FindFiles
+  \ execute system('git rev-parse --is-inside-work-tree') =~ 'true' ? 'ProjectFiles' : 'FZF'
+
+map <c-p> :FindFiles<cr>
