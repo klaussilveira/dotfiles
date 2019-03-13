@@ -1,10 +1,14 @@
 {
 	"color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
 	"detect_indentation": true,
-	"dpi_scale": 1.2,
+	"ui_scale": 1.5,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Inconsolata",
-	"font_size": 15,
+	"font_size": 14,
+	"animation_enabled": false,
+	"tree_animation_enabled": false,
+	"show_git_status": false,
+	"mini_diff": false,
 	"ignored_packages":
 	[
 		"Vintage"
