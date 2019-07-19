@@ -1,0 +1,31 @@
+tput smkx
+xrdb ~/.Xresources
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+alias symfony-acl="sudo setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX var/cache var/logs var/log && sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx var/cache var/logs var/log"
+alias symfony-clean="sudo rm -rf var/cache/* && sudo rm -rf var/logs/*"
+alias pid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzf | sed 's/^ *//' | cut -f1 -d' '"
+alias mp3="youtube-dl --extract-audio --audio-format mp3"
+alias ff="find . -type f -name"
+
+usedf() {
+  lsof | awk '{ print $2 " " $1; }' | sort -rn | uniq -c | sort -rn | head -20
+}
+
+q() {
+  cd $(find /var/dev /var/www -maxdepth 1 -type d | fzf)
+}
+
+# nnn
+export NNN_COPIER="/usr/bin/xsel"
+export NNN_RESTRICT_NAV_OPEN=1
+export LC_COLLATE="C"
+n() {
+  nnn "$@"
+  NNN_TMPFILE=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd
+
+  if [ -f $NNN_TMPFILE ]; then
+    . $NNN_TMPFILE
+    rm -f $NNN_TMPFILE > /dev/null
+  fi
+}
