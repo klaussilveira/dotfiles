@@ -1,5 +1,6 @@
 {
 	"animation_enabled": false,
+	"auto_complete": false,
 	"color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
 	"detect_indentation": true,
 	"ensure_newline_at_eof_on_save": true,

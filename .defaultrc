@@ -7,6 +7,12 @@ alias symfony-clean="sudo rm -rf var/cache/* && sudo rm -rf var/logs/*"
 alias pid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzf | sed 's/^ *//' | cut -f1 -d' '"
 alias mp3="youtube-dl --extract-audio --audio-format mp3"
 alias ff="find . -type f -name"
+alias imgmin="mogrify -resize 50% -strip -interlace Plane -quality 85%"
+alias dpkg-fat="dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -nr"
+
+loop() {
+  seq 1 $1 | xargs -n1 -P8 $2
+}
 
 usedf() {
   lsof | awk '{ print $2 " " $1; }' | sort -rn | uniq -c | sort -rn | head -20
@@ -15,6 +21,12 @@ usedf() {
 q() {
   cd $(find /var/dev /var/www -maxdepth 1 -type d | fzf)
 }
+
+ngrok() {
+  /var/opt/ngrok http -host-header=rewrite sf.localhost:80
+}
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # nnn
 export NNN_COPIER="/usr/bin/xsel"
@@ -29,3 +41,8 @@ n() {
     rm -f $NNN_TMPFILE > /dev/null
   fi
 }
+
+# crap
+alias wnow="curl wttr.in?0"
+alias ws="curl wttr.in?format="%t+%h+%p+%o""
+alias calc="bc"
