@@ -3,7 +3,7 @@ export CLICOLOR=1
 tput smkx
 xrdb ~/.Xresources
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export PATH="$PYENV_ROOT/bin:/var/opt/dotnet/:$PATH"
+export PATH="/usr/local/go/bin:$HOME/dlang/dmd-2.091.0/linux/bin64:$PYENV_ROOT/bin:/var/opt/dotnet:/var/opt/flutter/bin:$PATH"
 
 alias symfony-acl="sudo setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX var/cache var/logs var/log && sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx var/cache var/logs var/log"
 alias symfony-clean="sudo rm -rf var/cache/* && sudo rm -rf var/logs/*"
@@ -13,6 +13,7 @@ alias ff="find . -type f -name"
 alias imgmin="mogrify -resize 50% -strip -interlace Plane -quality 85%"
 alias dpkg-fat="dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -nr"
 alias ls='ls --color=auto'
+alias dcli='docker-compose -f docker-compose.cli.yml run --rm'
 
 loop() {
   seq 1 $1 | xargs -n1 -P8 $2
@@ -28,6 +29,18 @@ q() {
 
 ngrok() {
   /var/opt/ngrok http -host-header=rewrite sf.localhost:80
+}
+
+serve_music() {
+  docker run -t -d --name=polaris -p 5050:5050 -v $1:/music -v /var/lib/polaris:/var/lib/polaris ogarcia/polaris
+}
+
+post() {
+  curl -X POST -H "Content-Type: application/json" -d $2 $1
+}
+
+serve() {
+  python -m http.server $1
 }
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
