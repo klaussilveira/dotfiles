@@ -14,6 +14,7 @@ alias imgmin="mogrify -resize 50% -strip -interlace Plane -quality 85%"
 alias dpkg-fat="dpkg-query -W --showformat='${Installed-Size}\t${Package}\n' | sort -nr"
 alias ls='ls --color=auto'
 alias dcli='docker-compose -f docker-compose.cli.yml run --rm'
+alias ddiff='diff --recusive --unified'
 
 loop() {
   seq 1 $1 | xargs -n1 -P8 $2
@@ -27,10 +28,6 @@ q() {
   cd $(find /var/dev /var/www -maxdepth 1 -type d | fzf)
 }
 
-ngrok() {
-  /var/opt/ngrok http -host-header=rewrite sf.localhost:80
-}
-
 serve_music() {
   docker run -t -d --name=polaris -p 5050:5050 -v $1:/music -v /var/lib/polaris:/var/lib/polaris ogarcia/polaris
 }
@@ -41,6 +38,22 @@ post() {
 
 serve() {
   python -m http.server $1
+}
+
+http() {
+  port="${1:-8080}"
+
+  apache2 -DFOREGROUND -d. -f/dev/null \
+    -C"PidFile `mktemp -u`" \
+    -C"ServerName localhost" \
+    -C"LoadModule authz_core_module /usr/lib/apache2/modules/mod_authz_core.so" \
+    -C"LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so" \
+    -C"LoadModule dir_module /usr/lib/apache2/modules/mod_dir.so" \
+    -C"Listen $port" \
+    -C"TransferLog /dev/stdout" \
+    -C"ErrorLog /dev/stdout" \
+    -C"DocumentRoot `pwd`" \
+    -e debug
 }
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
