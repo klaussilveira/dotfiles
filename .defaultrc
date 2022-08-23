@@ -16,6 +16,10 @@ alias ls='ls --color=auto'
 alias dcli='docker-compose -f docker-compose.cli.yml run --rm'
 alias ddiff='diff --recusive --unified'
 
+nls() {
+  lsof -i -n -P | awk '{split($9,a,">"); print $1,$8,a[2]}' | awk '(NF==3){print $0}' | sort | uniq -c | sort -Vr -k1,1 -k4,4 | sed 's/  //g'
+}
+
 loop() {
   seq 1 $1 | xargs -n1 -P8 $2
 }
@@ -36,10 +40,6 @@ post() {
   curl -X POST -H "Content-Type: application/json" -d $2 $1
 }
 
-serve() {
-  python -m http.server $1
-}
-
 http() {
   port="${1:-8080}"
 
@@ -54,6 +54,19 @@ http() {
     -C"ErrorLog /dev/stdout" \
     -C"DocumentRoot `pwd`" \
     -e debug
+}
+
+curltime() {
+  curl -w @- -o /dev/null -s "$@" <<'EOF'
+    time_namelookup:  %{time_namelookup}\n
+       time_connect:  %{time_connect}\n
+    time_appconnect:  %{time_appconnect}\n
+   time_pretransfer:  %{time_pretransfer}\n
+      time_redirect:  %{time_redirect}\n
+ time_starttransfer:  %{time_starttransfer}\n
+                    ----------\n
+         time_total:  %{time_total}\n
+EOF
 }
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
