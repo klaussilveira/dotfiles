@@ -5,10 +5,11 @@
 	"detect_indentation": true,
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "Inconsolata",
-	"font_size": 16,
+	"font_size": 15,
+	"gpu_window_buffer": false,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
 	],
 	"mini_diff": false,
 	"show_git_status": false,
@@ -21,5 +22,6 @@
 	"trim_automatic_white_space": true,
 	"trim_trailing_white_space_on_save": true,
 	"ui_scale": 1.5,
-	"word_wrap": true
+	"update_check": false,
+	"word_wrap": true,
 }
