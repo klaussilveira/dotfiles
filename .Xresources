@@ -5,6 +5,18 @@ st.termname: xterm-256color
 st.borderpx: 4
 st.cursorColor: #fff
 
+! zutty
+Zutty.title: terminal
+Zutty.altScroll: true
+Zutty.autoCopy: true
+Zutty.boldColors: false
+Zutty.font: DejaVuSansMono
+Zutty.fontsize: 16
+Zutty.fontpath: /usr/share/fonts
+Zutty.fg: #c0c5ce
+Zutty.bg: #2b303b
+Zutty.cr: #c0c5ce
+
 ! special
 *.foreground:   #c0c5ce
 *.background:   #2b303b
