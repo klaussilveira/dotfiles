@@ -7,11 +7,12 @@ st.cursorColor: #fff
 
 ! zutty
 Zutty.title: terminal
+Zutty.geometry: 80x20
 Zutty.altScroll: true
 Zutty.autoCopy: true
 Zutty.boldColors: false
-Zutty.font: DejaVuSansMono
-Zutty.fontsize: 16
+Zutty.font: JetBrainsMono
+Zutty.fontsize: 18
 Zutty.fontpath: /usr/share/fonts
 Zutty.fg: #c0c5ce
 Zutty.bg: #2b303b

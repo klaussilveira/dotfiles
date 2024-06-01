@@ -9,6 +9,7 @@
 	"gpu_window_buffer": false,
 	"ignored_packages":
 	[
+		"Rust",
 		"Vintage",
 	],
 	"mini_diff": false,
@@ -24,4 +25,5 @@
 	"ui_scale": 1.5,
 	"update_check": false,
 	"word_wrap": true,
+	"index_files": true,
 }

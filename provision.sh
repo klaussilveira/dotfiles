@@ -18,6 +18,10 @@ if [ "$distro" == "ManjaroLinux" ]; then
   git clone https://github.com/adapta-project/adapta-gtk-theme.git
   cd adapta-gtk-theme && ./autogen.sh --prefix=/usr --disable-cinnamon --disable-flashback --disable-xfce --disable-mate --disable-openbox && make && sudo make install
 
+
+elif [ "$distro" == "Debian" ]; then
+  apt install autoconf automake build-essential curl fonts-firacode fonts-inconsolata gimp git gparted pkg-config ninja-build cmake vim libgles2 libgles-dev libx11-dev libx11-xcb-dev libfreetype-dev libxmu-dev libglu1-mesa-dev mesa-common-dev libreadline-dev libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libusb-1.0-0-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libwayland-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev
+
 elif [ "$distro" == "Ubuntu" ]; then
     apt purge snapd gnome-software-plugin-snap brltty orca ubuntu-software gnome-software gnome-software-common gnome-shell-extension-ubuntu-dock
     rm -rf ~/snap
