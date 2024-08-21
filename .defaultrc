@@ -5,7 +5,8 @@ export VULKAN_SDK=/var/opt/vulkansdk/x86_64
 tput smkx
 xrdb ~/.Xresources
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export PATH="$VULKAN_SDK/bin:$HOME/.cargo/bin:/usr/local/go/bin:$HOME/.rvm/bin:$PATH"
+export GOPATH=$HOME/go
+export PATH="$VULKAN_SDK/bin:$HOME/Apps/:$HOME/.cargo/bin:/usr/local/go/bin:$HOME/.rvm/bin:$PATH"
 source ~/.rvm/scripts/rvm
 . "$HOME/.cargo/env"
 export COMPOSER_HOME=$HOME/.config/composer/
@@ -21,9 +22,18 @@ alias ls='ls --color=auto'
 alias dcli='docker-compose -f docker-compose.cli.yml run --rm'
 alias ddiff='diff --recusive --unified'
 alias enhance='function ne() { docker run --rm -v "$(pwd)/`dirname ${@:$#}`":/ne/input -it alexjc/neural-enhance ${@:1:$#-1} "input/`basename ${@:$#}`"; }; ne'
+alias disks='lsblk -T -o NAME,SIZE,FSTYPE,LABEL'
 
 nls() {
   lsof -i -n -P | awk '{split($9,a,">"); print $1,$8,a[2]}' | awk '(NF==3){print $0}' | sort | uniq -c | sort -Vr -k1,1 -k4,4 | sed 's/  //g'
+}
+
+movtomp4() {
+  for i in *.mov; do ffmpeg -y -i "$i" -vcodec libx264 -crf 24 "${i%.*}.mp4"; done
+}
+
+title() {
+  echo -ne "\033]0;$1\007"
 }
 
 tz() {
@@ -31,6 +41,12 @@ tz() {
   TZ=America/Denver date -d ${1:-now} "+%H:%M CST"
   TZ=America/Los_Angeles date -d ${1:-now} "+%H:%M PST"
   TZ=Europe/Berlin date -d ${1:-now} "+%H:%M Berlin"
+}
+
+h264() {
+  ffmpeg -y -i ${1} -ss '00:00:01.000' -vframes 1 -vf 'scale=300:300:force_original_aspect_ratio=decrease' ${1}.jpg
+  ffmpeg -y -i ${1} -vcodec 'libx264' -crf 24 ${1}.h264
+  ffmpeg -y -i ${1} -c:v 'libvpx-vp9' -crf 30 -b:v 0 -b:a '128k' ${1}.webm
 }
 
 lget() {
