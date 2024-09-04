@@ -22,10 +22,18 @@ alias ls='ls --color=auto'
 alias dcli='docker-compose -f docker-compose.cli.yml run --rm'
 alias ddiff='diff --recusive --unified'
 alias enhance='function ne() { docker run --rm -v "$(pwd)/`dirname ${@:$#}`":/ne/input -it alexjc/neural-enhance ${@:1:$#-1} "input/`basename ${@:$#}`"; }; ne'
-alias disks='lsblk -T -o NAME,SIZE,FSTYPE,LABEL'
+alias disks='lsblk -T -o NAME,FSTYPE,SIZE,FSUSE%,MOUNTPOINTS,LABEL'
 
 nls() {
   lsof -i -n -P | awk '{split($9,a,">"); print $1,$8,a[2]}' | awk '(NF==3){print $0}' | sort | uniq -c | sort -Vr -k1,1 -k4,4 | sed 's/  //g'
+}
+
+fls() {
+  ls $1 | xargs -n 1
+}
+
+minmp4() {
+  for i in *.mp4; do ffmpeg -y -i "$i" -vcodec libx264 -crf 24 "${i%.*}_min.mp4"; done
 }
 
 movtomp4() {
@@ -47,6 +55,25 @@ h264() {
   ffmpeg -y -i ${1} -ss '00:00:01.000' -vframes 1 -vf 'scale=300:300:force_original_aspect_ratio=decrease' ${1}.jpg
   ffmpeg -y -i ${1} -vcodec 'libx264' -crf 24 ${1}.h264
   ffmpeg -y -i ${1} -c:v 'libvpx-vp9' -crf 30 -b:v 0 -b:a '128k' ${1}.webm
+}
+
+ddstotga() {
+  for i in *.dds; do convert "$i" -set colorspace RGB "${i%.*}.tga"; done
+}
+
+ddstopng() {
+  for i in *.dds; do convert "$i" -set colorspace RGB "${i%.*}.png"; done
+}
+
+remove_alpha() {
+  for i in *.png; do convert "$i" -set colorspace RGB -alpha off "${i%.*}.png"; done
+}
+
+split_unity() {
+  convert ${1} -channel R -separate ${1%.*}_metallic.png
+  convert ${1} -channel G -separate ${1%.*}_ao.png
+  convert ${1} -channel B -separate ${1%.*}_detail.png
+  convert ${1} -channel A -separate ${1%.*}_smoothness.png
 }
 
 lget() {
