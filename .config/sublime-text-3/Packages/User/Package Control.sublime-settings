@@ -1,0 +1,17 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Behat",
+		"Dockerfile Syntax Highlighting",
+		"Monokai - Spacegray",
+		"Package Control",
+		"Rust Enhanced",
+		"Terraform",
+		"TOML",
+		"Twig",
+	],
+}
