@@ -17,7 +17,7 @@
     "button": true,
     "dock": "left",
     "git_status": false
-  }
+  },
   "git": {
     "git_gutter": "hide",
     "inline_blame": {
