@@ -11,6 +11,12 @@ source ~/.rvm/scripts/rvm
 . "$HOME/.cargo/env"
 export COMPOSER_HOME=$HOME/.config/composer/
 
+export VULKAN_SDK=/var/opt/vulkansdk/x86_64
+export PATH=$VULKAN_SDK/bin:$PATH
+export LD_LIBRARY_PATH=$VULKAN_SDK/lib:$LD_LIBRARY_PATH
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d
+export VK_LAYER_PATH=$VULKAN_SDK/share/vulkan/explicit_layer.d:/usr/share/vulkan/explicit_layer.d/
+
 alias symfony-acl="sudo setfacl -R -m u:www-data:rwX -m u:`whoami`:rwX var/cache var/logs var/log && sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx var/cache var/logs var/log"
 alias symfony-clean="sudo rm -rf var/cache/* && sudo rm -rf var/logs/*"
 alias pid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzf | sed 's/^ *//' | cut -f1 -d' '"
@@ -23,6 +29,7 @@ alias dcli='docker-compose -f docker-compose.cli.yml run --rm'
 alias ddiff='diff --recusive --unified'
 alias enhance='function ne() { docker run --rm -v "$(pwd)/`dirname ${@:$#}`":/ne/input -it alexjc/neural-enhance ${@:1:$#-1} "input/`basename ${@:$#}`"; }; ne'
 alias disks='lsblk -T -o NAME,FSTYPE,SIZE,FSUSE%,MOUNTPOINTS,LABEL'
+alias openai='docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main'
 
 nls() {
   lsof -i -n -P | awk '{split($9,a,">"); print $1,$8,a[2]}' | awk '(NF==3){print $0}' | sort | uniq -c | sort -Vr -k1,1 -k4,4 | sed 's/  //g'
